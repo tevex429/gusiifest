@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gusii Fest Crossover & New Year · Tickets</title>
+  <!-- Font Awesome 6 (free) for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: #0b0f0c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* main ticket card – mimics page 2 layout */
+    .ticket-app {
+      max-width: 620px;
+      width: 100%;
+      background: #1e2a1e; /* deep green base */
+      border-radius: 28px;
+      padding: 28px 28px 32px;
+      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px #3e5a3e inset;
+      color: #f0f7e6;
+    }
+
+    /* header + nav (exactly as image: logo, links) */
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #3b4f3b;
+      padding-bottom: 16px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* colored feather / disc logo */
+    .logo-icon {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .feather {
+      width: 10px;
+      background: #c0392b; /* red */
+      border-radius: 4px 4px 0 0;
+      transform: skewX(-5deg);
+    }
+
+    .feather.green { background: #2e7d32; height: 28px; }
+    .feather.blue { background: #1565c0; height: 34px; }
+    .feather.red { background: #c62828; height: 40px; }
+
+    .disc {
+      width: 38px;
+      height: 38px;
+      background: #f1c40f;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: 4px;
+      position: relative;
+    }
+
+    .disc::after {
+      content: "";
+      width: 16px;
+      height: 16px;
+      background: #1e2a1e;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    /* nav links – using grid to match image style */
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      color: #d4e6c3;
+      justify-content: flex-end;
+    }
+
+    .nav-links span {
+      cursor: default;
+    }
+
+    .nav-links .active {
+      color: #f1c40f;
+    }
+
+    /* main event visual – recreated with two date cards + central & */
+    .event-hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 16px 0 18px;
+      background: radial-gradient(circle at 20% 30%, #1f3b1f, #0e1a0e);
+      border-radius: 24px;
+      padding: 20px 10px;
+      position: relative;
+      border: 1px solid #b8952c;
+      box-shadow: 0 8px 0 #0b130b;
+    }
+
+    .date-card {
+      background: #1e2a1e;
+      border: 2px solid #d4af37;
+      border-radius: 18px;
+      padding: 12px 14px;
+      text-align: center;
+      min-width: 130px;
+      box-shadow: 0 0 0 1px #5f4e1a inset;
+    }
+
+    .date-card .banner {
+      background: #d4af37;
+      color: #0e1a0e;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 4px 8px;
+      border-radius: 40px;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .date-card .day {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: #f5f1d6;
+      line-height: 1;
+      letter-spacing: 2px;
+      margin: 4px 0 2px;
+    }
+
+    .date-card .year {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #d4af37;
+    }
+
+    .date-card .fest-name {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #b6d7a8;
+      text-transform: uppercase;
+      margin: 4px 0;
+    }
+
+    .date-card .big-label {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #fff8e0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: #2b4b2b;
+      padding: 3px 0;
+      border-radius: 20px;
+      margin: 4px 0;
+    }
+
+    .date-card .time {
+      font-size: 0.6rem;
+      color: #b6d7a8;
+      margin-top: 6px;
+      letter-spacing: 0.4px;
+    }
+
+    .ampersand {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #d4af37;
+      text-shadow: 0 0 10px #b8952c;
+      font-family: 'Georgia', serif;
+      line-height: 1;
+      margin: 0 4px;
+    }
+
+    /* location & QR row */
+    .location-qr {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1b2a1b;
+      border-radius: 18px;
+      padding: 12px 16px;
+      margin: 12px 0 16px;
+      border: 1px solid #3e5a3e;
+    }
+
+    .location {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .location .pin {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .location .pin i {
+      color: #e74c3c;
+      font-size: 1.2rem;
+    }
+
+    .location .phone {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      color: #b6d7a8;
+    }
+
+    .location .phone i {
+      color: #25d366;
+      font-size: 1.1rem;
+    }
+
+    .location .phone span {
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .qr-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.6rem;
+      color: #b6d7a8;
+      text-transform: uppercase;
+    }
+
+    .qr-box {
+      background: #fff;
+      padding: 6px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-box img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      image-rendering: pixelated;
+    }
+
+    /* ticket section – exactly page 2 layout */
+    .ticket-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0 12px;
+    }
+
+    .ticket-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #1b2a1b;
+      border-radius: 60px;
+      padding: 10px 16px 10px 20px;
+      border: 1px solid #3e5a3e;
+      transition: 0.1s;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .ticket-info {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .ticket-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #f0f7e6;
+      line-height: 1.3;
+    }
+
+    .ticket-sub {
+      font-size: 0.7rem;
+      color: #b0c9a0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .ticket-sub .sold-out {
+      background: #9e2b2b;
+      color: #ffe0e0;
+      padding: 0 8px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.6rem;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .ticket-sub .expired {
+      color: #d4af37;
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .price {
+      font-weight: 800;
+      color: #f1c40f;
+      font-size: 1rem;
+      white-space: nowrap;
+      margin-right: 8px;
+    }
+
+    .price small {
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: #b6d7a8;
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #2b3b2b;
+      padding: 4px 8px;
+      border-radius: 40px;
+    }
+
+    .qty-btn {
+      background: #5f5f5f;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      font-size: 1.1rem;
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    .qty-btn.plus-red {
+      background: #c0392b;
+      opacity: 1;
+    }
+
+    .qty-number {
+      font-weight: 700;
+      color: #fff;
+      min-width: 18px;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    /* ----- book button & footer ----- */
+    .book-section {
+      margin-top: 24px;
+    }
+
+    .book-btn {
+      width: 100%;
+      background: #f1c40f;
+      border: none;
+      border-radius: 60px;
+      padding: 16px;
+      font-weight: 900;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      color: #0b130b;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 0 #a07e0e;
+      transition: 0.1s;
+      border: 1px solid #f9e79f;
+    }
+
+    .book-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 6px 0 #a07e0e;
+    }
+
+    .terms {
+      font-size: 0.65rem;
+      color: #b0c9a0;
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+
+    .terms a {
+      color: #d4af37;
+      text-decoration: none;
+    }
+
+    .copyright {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      font-size: 0.6rem;
+      color: #708070;
+      border-top: 1px solid #2b3b2b;
+      padding-top: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .webhooks {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* small logo at very bottom */
+    .mini-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.8;
+    }
+
+    .mini-logo .feather {
+      width: 6px;
+    }
+
+    .mini-logo .feather.green { height: 18px; }
+    .mini-logo .feather.blue { height: 22px; }
+    .mini-logo .feather.red { height: 26px; }
+
+    .mini-logo .disc {
+      width: 26px;
+      height: 26px;
+    }
+
+    .mini-logo .disc::after {
+      width: 10px;
+      height: 10px;
+    }
+
+    /* responsive */
+    @media (max-width: 500px) {
+      .ticket-app { padding: 18px; }
+      .event-hero { gap: 6px; }
+      .date-card { min-width: 110px; padding: 8px; }
+      .date-card .day { font-size: 1.4rem; }
+      .ampersand { font-size: 2rem; }
+      .location-qr { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .nav-links { font-size: 0.55rem; gap: 6px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ticket-app">
+    <!-- Top navigation with logo -->
+    <div class="top-bar">
+      <div class="logo-area">
+        <div class="logo-icon">
+          <div class="feather green"></div>
+          <div class="feather blue"></div>
+          <div class="feather red"></div>
+          <div class="disc"></div>
+        </div>
+      </div>
+      <div class="nav-links">
+        <span>ABOUT US</span>
+        <span>MOVIES</span>
+        <span>MY TICKETS</span>
+        <span>CONTACT US</span>
+        <span>SIGN IN</span>
+        <span>SPORTS</span>
+        <span>KIDS ENTERTAINMENT</span>
+        <span>COMEDY</span>
+        <span>ARTS AND GALLERY</span>
+        <span>CONCERTS</span>
+        <span>OUTDOOR</span>
+        <span>RELIGIOUS ACT</span>
+      </div>
+    </div>
+
+    <!-- Hero: two dates + ampersand (like page 1/2 imagery) -->
+    <div class="event-hero">
+      <!-- 31st December card -->
+      <div class="date-card">
+        <div class="banner">31<sup>ST</sup></div>
+        <div class="day">DECEMBER</div>
+        <div class="year">2026</div>
+        <div class="fest-name">GUSII FEST</div>
+        <div class="big-label">CROSSOVER</div>
+        <div class="time"><i class="far fa-clock"></i> 4:00PM - 4:00AM</div>
+      </div>
+
+      <div class="ampersand">&</div>
+
+      <!-- 1st January card -->
+      <div class="date-card">
+        <div class="banner">1<sup>ST</sup></div>
+        <div class="day">JANUARY</div>
+        <div class="year">2027</div>
+        <div class="fest-name">GUSII FEST</div>
+        <div class="big-label">NEW YEAR</div>
+        <div class="time"><i class="far fa-clock"></i> 4:00PM - 4:00AM</div>
+      </div>
+    </div>
+
+    <!-- Location + QR (exactly as in image) -->
+    <div class="location-qr">
+      <div class="location">
+        <div class="pin"><i class="fas fa-map-marker-alt"></i> KISII TOWN</div>
+        <div class="phone">
+          <i class="fab fa-whatsapp"></i>
+          <span>+254 740 852 638</span>
+        </div>
+      </div>
+      <div class="qr-area">
+        <div class="qr-box">
+          <!-- tiny inline QR placeholder: using a simple SVG pattern to avoid external requests -->
+          <svg width="70" height="70" viewBox="0 0 70 70" shape-rendering="crispEdges">
+            <rect width="70" height="70" fill="#fff" />
+            <rect x="4" y="4" width="14" height="14" fill="#111" />
+            <rect x="8" y="8" width="6" height="6" fill="#fff" />
+            <rect x="52" y="4" width="14" height="14" fill="#111" />
+            <rect x="56" y="8" width="6" height="6" fill="#fff" />
+            <rect x="4" y="52" width="14" height="14" fill="#111" />
+            <rect x="8" y="56" width="6" height="6" fill="#fff" />
+            <rect x="24" y="4" width="4" height="4" fill="#111" />
+            <rect x="32" y="8" width="6" height="6" fill="#111" />
+            <rect x="42" y="4" width="4" height="4" fill="#111" />
+            <rect x="4" y="24" width="4" height="4" fill="#111" />
+            <rect x="12" y="28" width="6" height="6" fill="#111" />
+            <rect x="4" y="36" width="4" height="8" fill="#111" />
+            <rect x="24" y="24" width="8" height="8" fill="#111" />
+            <rect x="36" y="24" width="6" height="6" fill="#111" />
+            <rect x="48" y="28" width="8" height="4" fill="#111" />
+            <rect x="56" y="36" width="6" height="6" fill="#111" />
+            <rect x="24" y="40" width="8" height="6" fill="#111" />
+            <rect x="40" y="44" width="8" height="8" fill="#111" />
+            <rect x="52" y="52" width="12" height="8" fill="#111" />
+            <rect x="28" y="56" width="6" height="6" fill="#111" />
+          </svg>
+        </div>
+        <span>SCAN TO GET TICKET</span>
+      </div>
+    </div>
+
+    <!-- TICKET LIST — exact representation of page 2 -->
+    <div class="ticket-list">
+
+      <!-- 31 Dec 2026 Early Bird (Sold out) -->
+      <div class="ticket-row">
+        <div class="ticket-info">
+          <div class="ticket-title">31st December 2026 · Early Bird</div>
+          <div class="ticket-sub">
+            <span class="sold-out">SOLD OUT</span>
+            <span>Available 27 Aug – 30 Nov 2026</span>
+          </div>
+        </div>
+        <div class="price">KES 500.00</div>
+        <div class="qty-control">
+          <div class="qty-btn"><i class="fas fa-minus"></i></div>
+          <span class="qty-number">0</span>
+          <div class="qty-btn"><i class="fas fa-plus"></i></div>
+        </div>
+      </div>
+
+      <!-- 31 Dec 2026 VIP (Sold out / expired) -->
+      <div class="ticket-row">
+        <div class="ticket-info">
+          <div class="ticket-title">31st December 2026 · VIP</div>
+          <div class="ticket-sub">
+            <span class="sold-out">SOLD OUT</span>
+            <span class="expired">Ticket period expired</span>
+          </div>
+        </div>
+        <div class="price">KES 5,000.00</div>
+        <div class="qty-control">
+          <div class="qty-btn"><i class="fas fa-minus"></i></div>
+          <span class="qty-number">0</span>
+          <div class="qty-btn"><i class="fas fa-plus"></i></div>
+        </div>
+      </div>
+
+      <!-- 1 Jan 2027 VIP (Sold out) -->
+      <div class="ticket-row">
+        <div class="ticket-info">
+          <div class="ticket-title">1st January 2027 · VIP</div>
+          <div class="ticket-sub">
+            <span class="sold-out">SOLD OUT</span>
+          </div>
+        </div>
+        <div class="price">KES 5,000.00</div>
+        <div class="qty-control">
+          <div class="qty-btn"><i class="fas fa-minus"></i></div>
+          <span class="qty-number">0</span>
+          <div class="qty-btn"><i class="fas fa-plus"></i></div>
+        </div>
+      </div>
+
+      <!-- 31 Dec 2025 VVIP (available - plus is red) -->
+      <div class="ticket-row">
+        <div class="ticket-info">
+          <div class="ticket-title">31st December 2025 · VVIP</div>
+          <div class="ticket-sub"><span style="color:#b6d7a8;">Available</span></div>
+        </div>
+        <div class="price">KES 12,000.00</div>
+        <div class="qty-control">
+          <div class="qty-btn"><i class="fas fa-minus"></i></div>
+          <span class="qty-number">0</span>
+          <div class="qty-btn plus-red"><i class="fas fa-plus"></i></div>
+        </div>
+      </div>
+
+      <!-- 1 Jan 2027 VVIP (available) -->
+      <div class="ticket-row">
+        <div class="ticket-info">
+          <div class="ticket-title">1st January 2027 · VVIP</div>
+          <div class="ticket-sub"><span style="color:#b6d7a8;">Available</span></div>
+        </div>
+        <div class="price">KES 12,000.00</div>
+        <div class="qty-control">
+          <div class="qty-btn"><i class="fas fa-minus"></i></div>
+          <span class="qty-number">0</span>
+          <div class="qty-btn plus-red"><i class="fas fa-plus"></i></div>
+        </div>
+      </div>
+
+      <!-- VVIP TABLE OF 4 31 Dec 2026 (available) -->
+      <div class="ticket-row">
+        <div class="ticket-info">
+          <div class="ticket-title">VVIP TABLE OF 4 · 31st December 2026</div>
+          <div class="ticket-sub"><span style="color:#b6d7a8;">Available</span></div>
+        </div>
+        <div class="price">KES 45,000.00</div>
+        <div class="qty-control">
+          <div class="qty-btn"><i class="fas fa-minus"></i></div>
+          <span class="qty-number">0</span>
+          <div class="qty-btn plus-red"><i class="fas fa-plus"></i></div>
+        </div>
+      </div>
+
+      <!-- VVIP TABLE OF 4 1 Jan 2027 (available) -->
+      <div class="ticket-row">
+        <div class="ticket-info">
+          <div class="ticket-title">VVIP TABLE OF 4 · 1st January 2027</div>
+          <div class="ticket-sub"><span style="color:#b6d7a8;">Available</span></div>
+        </div>
+        <div class="price">KES 45,000.00</div>
+        <div class="qty-control">
+          <div class="qty-btn"><i class="fas fa-minus"></i></div>
+          <span class="qty-number">0</span>
+          <div class="qty-btn plus-red"><i class="fas fa-plus"></i></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOOK TICKETS button -->
+    <div class="book-section">
+      <button class="book-btn">BOOK TICKETS</button>
+      <div class="terms">
+        By continuing, you agree to our <a href="#">terms and conditions</a><br>
+        * Tickets once purchased cannot be refunded.
+      </div>
+    </div>
+
+    <!-- footer with webhooks & logo (page 3 style) -->
+    <div class="copyright">
+      <div class="webhooks">
+        <i class="fas fa-code"></i> Webhooks
+      </div>
+      <div>© Copyright 2026</div>
+      <div class="mini-logo">
+        <div class="feather green"></div>
+        <div class="feather blue"></div>
+        <div class="feather red"></div>
+        <div class="disc"></div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
